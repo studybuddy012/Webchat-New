@@ -224,5 +224,88 @@ body {
         max-width: none;
     }
 }
+/* ================= 1. EMOJI PICKER MAIN CONTAINER ================= */
+.emoji-picker {
+    position: absolute;
+    bottom: 70px;
+    left: 10px;
+    width: 320px;
+    height: 380px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+    border: 1px solid #ddd;
+    overflow: hidden;
+}
 
+/* ================= 2. CATEGORY TABS (TOP) ================= */
+.emoji-tabs {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 5px;
+    background: #f8f9fa;
+    border-bottom: 1px solid #eee;
+}
+
+.tab-btn {
+    cursor: pointer;
+    font-size: 18px;
+    padding: 5px;
+    transition: 0.2s;
+    opacity: 0.6;
+}
+
+.tab-btn.active {
+    opacity: 1;
+    transform: scale(1.2);
+    border-bottom: 2px solid #0095f6;
+}
+
+/* ================= 3. EMOJI CONTENT AREA ================= */
+.emoji-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px;
+}
+
+/* Category Title */
+.emoji-category-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: #8e8e8e;
+    margin: 10px 0 5px 5px;
+    text-transform: uppercase;
+}
+
+/* Emoji Grid */
+.emoji-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr); /* 6 columns for better space */
+    gap: 8px;
+    justify-items: center;
+}
+
+.emoji-grid span {
+    font-size: 24px;
+    cursor: pointer;
+    padding: 5px;
+    transition: transform 0.1s;
+}
+
+.emoji-grid span:hover {
+    transform: scale(1.3);
+}
+
+/* Scrollbar for Emoji Section */
+.emoji-content::-webkit-scrollbar { width: 5px; }
+.emoji-content::-webkit-scrollbar-thumb { background: #ddd; border-radius: 10px; }
+
+/* ================= 4. MOBILE VIEW ================= */
+@media (max-width: 600px) {
+    .emoji-picker { width: 92%; left: 4%; height: 350px; }
+    .emoji-grid { grid-template-columns: repeat(6, 1fr); }
+}
 .hidden { display: none !important; }
