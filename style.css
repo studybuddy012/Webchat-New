@@ -7,9 +7,10 @@
 
 body {
     margin: 0;
-    font-family: 'Inter', -apple-system, sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     background: #f5f7fa;
-    height: 100dvh; /* Mobile height fix */
+    height: 100vh;
+    height: 100dvh; /* Mobile browser height fix */
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -30,9 +31,21 @@ body {
     flex-shrink: 0;
 }
 
-.user-info #chat-name { font-weight: 600; font-size: 16px; color: #262626; }
-.status-text { font-size: 12px; color: #8e8e8e; }
-.status-online { color: #2ecc71 !important; font-weight: bold; }
+.user-info #chat-name { 
+    font-weight: 600; 
+    font-size: 16px; 
+    color: #262626; 
+}
+
+.status-text { 
+    font-size: 12px; 
+    color: #8e8e8e; 
+}
+
+.status-online { 
+    color: #2ecc71 !important; 
+    font-weight: bold; 
+}
 
 .logout-btn {
     background: #fafafa;
@@ -46,41 +59,44 @@ body {
     display: flex;
     align-items: center;
     gap: 6px;
-    transition: 0.2s;
+    transition: all 0.2s ease;
 }
 
 .logout-btn i { color: #ed4956; font-size: 14px; }
-.logout-btn:hover { background: #f0f0f0; transform: translateY(-1px); }
+.logout-btn:hover { background: #f0f0f0; border-color: #aeaeae; transform: translateY(-1px); }
 
-/* ================= 3. CHAT AREA (Mountain BG) ================= */
+/* ================= 3. CHAT AREA & MOUNTAIN BG ================= */
 #messages {
     flex: 1;
     overflow-y: auto;
     padding: 15px;
     display: flex;
     flex-direction: column;
+    scroll-behavior: smooth;
     background: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1000&q=80');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
+    /* Readability overlay */
     box-shadow: inset 0 0 0 2000px rgba(255, 255, 255, 0.5); 
 }
 
-/* Scrollbar Style */
+/* Custom Scrollbar */
 #messages::-webkit-scrollbar { width: 4px; }
 #messages::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.1); border-radius: 10px; }
 
-/* ================= 4. MESSAGE BUBBLES (Perfect Wrap) ================= */
+/* ================= 4. MESSAGE BUBBLES (Wrapping Fix) ================= */
 .msg-row {
     display: flex;
     flex-direction: column;
     margin-bottom: 10px;
-    max-width: 80%; /* Box ki width limit */
+    max-width: 80%;
+    /* POP-IN ANIMATION */
     animation: messagePop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 @keyframes messagePop {
-    0% { opacity: 0; transform: translateY(10px) scale(0.95); }
+    0% { opacity: 0; transform: translateY(15px) scale(0.9); }
     100% { opacity: 1; transform: translateY(0) scale(1); }
 }
 
@@ -92,12 +108,10 @@ body {
     border-radius: 18px;
     font-size: 14px;
     line-height: 1.5;
-    
-    /* WRAP FIXES */
-    word-wrap: break-word;
+    /* ULTIMATE WRAP FIX */
     overflow-wrap: break-word;
-    word-break: break-word; /* Lambe text ko todne ke liye */
-    display: inline-block;
+    word-wrap: break-word;
+    word-break: break-word;
     box-shadow: 0 1px 2px rgba(0,0,0,0.08);
 }
 
@@ -107,14 +121,15 @@ body {
 .msg-meta { font-size: 10px; color: #8e8e8e; margin-top: 4px; }
 .seen-status { color: #0095f6; font-weight: 600; }
 
-/* ================= 5. TYPING INDICATOR (Dots Only - Fixed) ================= */
+/* ================= 5. TYPING INDICATOR (Transparent Dots Only) ================= */
 #typing-container {
-    background: transparent !important; /* Pure transparent */
+    background: transparent !important;
     box-shadow: none !important;
     border: none !important;
-    padding: 10px 15px !important;
-    margin-bottom: 5px;
+    padding: 5px 15px !important;
+    margin-bottom: 10px;
     width: fit-content;
+    z-index: 10;
 }
 
 .typing-indicator {
@@ -127,9 +142,8 @@ body {
 
 .typing-dots { display: flex; gap: 4px; }
 .typing-dots span {
-    width: 6px;
-    height: 6px;
-    background: #555; /* Dark grey dots for visibility */
+    width: 6px; height: 6px;
+    background: #555; /* Dark dots for mountain visibility */
     border-radius: 50%;
     animation: blink 1.4s infinite both;
 }
@@ -147,8 +161,8 @@ body {
     padding: 10px;
     background: white;
     border-top: 1px solid #dbdbdb;
-    position: relative;
     flex-shrink: 0;
+    position: relative;
 }
 
 .input-wrapper {
@@ -172,7 +186,7 @@ body {
 .action-btn { background: none; border: none; color: #0095f6; font-size: 20px; cursor: pointer; transition: 0.2s; }
 .action-btn:active { transform: scale(0.9); }
 
-/* EMOJI PICKER (5 COLUMNS) */
+/* EMOJI PICKER (5 COLUMNS FIX) */
 .emoji-picker {
     position: absolute;
     bottom: 75px;
@@ -205,8 +219,16 @@ body {
 /* ================= 7. MOBILE RESPONSIVE ================= */
 @media (max-width: 600px) {
     .msg-row { max-width: 85%; }
-    .bubble { font-size: 15px; }
-    .emoji-picker { left: 5%; right: 5%; width: 90%; max-width: none; }
+    .bubble { font-size: 15px; padding: 10px 14px; }
+    
+    .emoji-picker {
+        left: 5%;
+        right: 5%;
+        width: 90%;
+        max-width: none;
+    }
+
+    /* Fixed BG mobile fix */
     #messages { background-attachment: scroll; }
 }
 
