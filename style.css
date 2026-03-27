@@ -9,9 +9,9 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    background-attachment: fixed;
+    background: #f5f7fa; /* Fallback color */
     height: 100vh;
+    height: 100dvh; /* Mobile height fix */
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -24,9 +24,10 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: rgba(255, 255, 255, 0.8) !important;
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(0,0,0,0.05);
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px); /* Safari support */
+    border-bottom: 1px solid rgba(0,0,0,0.1);
     z-index: 100;
     flex-shrink: 0;
 }
@@ -37,42 +38,23 @@ body {
     color: #262626;
 }
 
-.status-text {
-    font-size: 12px;
-    color: #8e8e8e;
-}
-
-.status-online {
-    color: #2ecc71 !important;
-    font-weight: bold;
-}
+.status-text { font-size: 12px; color: #8e8e8e; }
+.status-online { color: #2ecc71 !important; font-weight: bold; }
 
 .logout-btn {
-    background: #fafafa;
+    background: #fff;
     border: 1px solid #dbdbdb;
-    color: #262626;
-    padding: 6px 14px;
+    padding: 6px 12px;
     border-radius: 8px;
     font-size: 13px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s ease;
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 5px;
 }
 
-.logout-btn i {
-    color: #ed4956;
-}
-
-.logout-btn:hover {
-    background: #f0f0f0;
-    transform: translateY(-1px);
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-}
-
-/* ================= 3. CHAT AREA (Mountain BG) ================= */
+/* ================= 3. CHAT AREA (Mountain BG Fix) ================= */
 #messages {
     flex: 1;
     overflow-y: auto;
@@ -80,19 +62,11 @@ body {
     display: flex;
     flex-direction: column;
     scroll-behavior: smooth;
-    /* background: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1000&q=80'); */
+    background: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1000&q=80');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
-    /* White overlay to make messages readable */
-    box-shadow: inset 0 0 0 2000px rgba(255, 255, 255, 0.6); 
-}
-
-#chat-loader {
-    text-align: center;
-    padding: 10px;
-    font-size: 12px;
-    color: #8e8e8e;
+    box-shadow: inset 0 0 0 2000px rgba(255, 255, 255, 0.5); 
 }
 
 /* ================= 4. MESSAGE BUBBLES & ANIMATIONS ================= */
@@ -100,13 +74,12 @@ body {
     display: flex;
     flex-direction: column;
     margin-bottom: 10px;
-    max-width: 75%;
-    /* Pop-in Animation */
+    max-width: 80%; /* Mobile optimized */
     animation: messagePop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 @keyframes messagePop {
-    0% { opacity: 0; transform: translateY(20px) scale(0.8); }
+    0% { opacity: 0; transform: translateY(10px) scale(0.95); }
     100% { opacity: 1; transform: translateY(0) scale(1); }
 }
 
@@ -114,104 +87,80 @@ body {
 .other-row { align-self: flex-start; align-items: flex-start; }
 
 .bubble {
-    padding: 8px 15px;
+    padding: 10px 15px;
     border-radius: 18px;
     font-size: 14px;
     line-height: 1.4;
     word-wrap: break-word;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    border: 1px solid rgba(0,0,0,0.05);
-    backdrop-filter: blur(5px);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
 }
 
 .me { 
-    background: rgba(0, 149, 246, 0.9); 
+    background: #0095f6; 
     color: white; 
     border-bottom-right-radius: 4px; 
 }
 
 .other { 
-    background: rgba(239, 239, 239, 0.9); 
+    background: rgba(255, 255, 255, 0.9); 
     color: #262626; 
-    border-bottom-left-radius: 4px; 
+    border-bottom-left-radius: 4px;
+    border: 1px solid rgba(0,0,0,0.05);
 }
 
-.msg-meta {
-    font-size: 10px;
-    color: #8e8e8e;
-    margin-top: 2px;
-}
-
-.seen-status {
-    color: #0095f6;
-    font-weight: 600;
-}
-
-/* Delete Animation */
-.msg-removed {
-    animation: messageFadeOut 0.4s ease forwards;
-}
-
-@keyframes messageFadeOut {
-    0% { opacity: 1; transform: scale(1); }
-    100% { opacity: 0; transform: scale(0.9); height: 0; margin: 0; padding: 0; visibility: hidden; }
-}
+.msg-meta { font-size: 10px; color: #8e8e8e; margin-top: 4px; }
+.seen-status { color: #0095f6; font-weight: 600; }
 
 /* ================= 5. TYPING INDICATOR ================= */
 .typing-indicator {
     display: flex;
-    align-items: center;
     padding: 8px 15px;
-    background: rgba(239, 239, 239, 0.9);
+    background: rgba(255, 255, 255, 0.8);
     border-radius: 18px;
-    border-bottom-left-radius: 4px;
     width: fit-content;
     margin-bottom: 10px;
-    margin-left: 15px;
     backdrop-filter: blur(5px);
 }
 
-.typing-dots { display: flex; gap: 4px; }
 .typing-dots span {
-    width: 6px;
-    height: 6px;
+    width: 6px; height: 6px;
     background: #8e8e8e;
     border-radius: 50%;
+    margin-right: 3px;
     animation: blink 1.4s infinite both;
 }
 .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
 .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
 
 @keyframes blink {
-    0%, 80%, 100% { opacity: 0.2; transform: scale(0.8); }
-    40% { opacity: 1; transform: scale(1.1); }
+    0%, 80%, 100% { opacity: 0.3; }
+    40% { opacity: 1; }
 }
 
 /* ================= 6. FOOTER & INPUT ================= */
 .footer-container {
-    padding: 10px 15px;
-    background: rgba(255, 255, 255, 0.8) !important;
-    backdrop-filter: blur(10px);
-    border-top: 1px solid rgba(0,0,0,0.05);
-    flex-shrink: 0;
+    padding: 10px;
+    background: white;
+    border-top: 1px solid #dbdbdb;
     position: relative;
+    flex-shrink: 0;
 }
 
 .input-wrapper {
     display: flex;
     align-items: center;
-    background: #fff;
+    background: #fafafa;
     border: 1px solid #dbdbdb;
     border-radius: 24px;
-    padding: 5px 12px;
+    padding: 2px 12px;
 }
 
 .input-wrapper input {
     flex: 1;
     border: none;
     outline: none;
-    padding: 8px;
-    font-size: 14px;
+    padding: 10px;
+    font-size: 15px;
     background: transparent;
 }
 
@@ -221,116 +170,58 @@ body {
     color: #0095f6;
     font-size: 20px;
     cursor: pointer;
-    margin: 0 5px;
-    transition: transform 0.2s;
 }
 
-.action-btn:active { transform: scale(0.9); }
-
-/* ================= 7. EMOJI PICKER (5 COLUMNS FIX) ================= */
+/* ================= 7. EMOJI PICKER (FIXED) ================= */
 .emoji-picker {
     position: absolute;
-    bottom: 75px;
-    left: 15px;
-    width: 260px;
-    height: 350px;
-    background: #ffffff;
+    bottom: 70px;
+    left: 10px;
+    right: 10px; /* Mobile width fix */
+    max-width: 320px;
+    height: 300px;
+    background: white;
     border-radius: 15px;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+    box-shadow: 0 -5px 25px rgba(0,0,0,0.1);
     display: flex;
     flex-direction: column;
-    overflow: hidden;
     z-index: 1000;
-    border: 1px solid #eaeaea;
-    box-sizing: border-box;
-    transition: all 0.3s ease;
-}
-
-.emoji-picker.hidden {
-    display: none;
-    opacity: 0;
-    transform: translateY(10px);
-}
-
-.emoji-tabs {
-    display: flex;
-    justify-content: space-around;
-    padding: 10px 5px;
-    background: #f8f9fa;
-    border-bottom: 1px solid #eee;
-}
-
-.tab-btn {
-    background: none;
-    border: none;
-    font-size: 16px;
-    color: #8e8e8e;
-    cursor: pointer;
-    padding: 8px;
-    border-radius: 8px;
-}
-
-.tab-btn.active {
-    color: #0095f6;
-    background: #e0f1ff;
+    overflow: hidden;
+    border: 1px solid #ddd;
 }
 
 .emoji-content {
-    padding: 10px;
+    flex: 1;
     overflow-y: auto;
-    overflow-x: hidden;
-    box-sizing: border-box;
-}
-
-.emoji-grid {
-    display: none;
-    grid-template-columns: repeat(5, 1fr); 
-    gap: 8px;
-    width: 100%;
+    padding: 10px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* Strict 5 columns */
+    gap: 10px;
     justify-items: center;
 }
 
-.emoji-grid.active { display: grid; }
-
-.emoji-grid span {
+.emoji-content span {
     font-size: 24px;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     cursor: pointer;
-    border-radius: 8px;
-    transition: background 0.2s;
+    padding: 5px;
 }
 
-.emoji-grid span:hover { background: #f0f2f5; }
-
-.emoji-content::-webkit-scrollbar { width: 4px; }
-.emoji-content::-webkit-scrollbar-thumb { background: #e0e0e0; border-radius: 10px; }
-
-/* ================= 8. RESPONSIVE DESIGN ================= */
+/* ================= 8. MOBILE SPECIFIC OVERRIDES ================= */
 @media (max-width: 600px) {
-    .bubble {
-        max-width: 85%;
-        padding: 10px 14px;
-        font-size: 15px;
-    }
-
-    .msg-row {
-        margin-bottom: 12px;
-        width: 100%;
-    }
-
+    .msg-row { max-width: 85%; }
+    .bubble { font-size: 15px; padding: 10px 14px; }
+    
     .emoji-picker {
-        width: 90%;
         left: 5%;
         right: 5%;
-        bottom: 80px;
+        max-width: none;
+        width: 90%;
     }
 
-    .chat-header { padding: 10px; }
-    #chat-name { font-size: 15px; }
+    /* Fixed background for mobile performance */
+    #messages {
+        background-attachment: scroll; 
+    }
 }
 
 .hidden { display: none !important; }
