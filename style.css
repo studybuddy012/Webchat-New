@@ -8,7 +8,7 @@
 body {
     margin: 0;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    background: #f5f7fa;
+    background: #f5f7fa; /* Clean background */
     height: 100vh;
     height: 100dvh; /* Mobile browser height fix */
     display: flex;
@@ -65,7 +65,7 @@ body {
 .logout-btn i { color: #ed4956; font-size: 14px; }
 .logout-btn:hover { background: #f0f0f0; border-color: #aeaeae; transform: translateY(-1px); }
 
-/* ================= 3. CHAT AREA & MOUNTAIN BG ================= */
+/* ================= 3. CHAT AREA (Background Image Removed) ================= */
 #messages {
     flex: 1;
     overflow-y: auto;
@@ -73,12 +73,7 @@ body {
     display: flex;
     flex-direction: column;
     scroll-behavior: smooth;
-    /* background: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1000&q=80'); */
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    /* Readability overlay */
-    box-shadow: inset 0 0 0 2000px rgba(255, 255, 255, 0.5); 
+    background: #f5f7fa; /* Clean background color */
 }
 
 /* Custom Scrollbar */
@@ -121,21 +116,22 @@ body {
 .msg-meta { font-size: 10px; color: #8e8e8e; margin-top: 4px; }
 .seen-status { color: #0095f6; font-weight: 600; }
 
-/* ================= 5. TYPING INDICATOR (Transparent Dots Only) ================= */
+/* ================= 5. TYPING INDICATOR (Grey Curved Bubble) ================= */
 #typing-container {
-    background: transparent !important;
-    box-shadow: none !important;
+    background: #555 !important; /* Grey bubble background */
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1) !important;
     border: none !important;
-    padding: 5px 15px !important;
+    padding: 10px 15px !important;
     margin-bottom: 10px;
     width: fit-content;
+    border-radius: 18px 18px 18px 4px !important; /* Left curved bubble */
     z-index: 10;
 }
 
 .typing-indicator {
     display: flex;
     align-items: center;
-    background-color: #555;
+    background: transparent !important;
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
 }
@@ -143,7 +139,7 @@ body {
 .typing-dots { display: flex; gap: 4px; }
 .typing-dots span {
     width: 6px; height: 6px;
-    background: #555; /* Dark dots for mountain visibility */
+    background: #fff; /* White dots for grey visibility */
     border-radius: 50%;
     animation: blink 1.4s infinite both;
 }
@@ -227,9 +223,6 @@ body {
         width: 90%;
         max-width: none;
     }
-
-    /* Fixed BG mobile fix */
-    #messages { background-attachment: scroll; }
 }
 
 .hidden { display: none !important; }
