@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Private Chat | Pratham</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="chat-header">
+    <div class="user-info">
+      <div id="chat-name">Connecting...</div>
+      <div id="user-status" class="status-text">Checking...</div>
+    </div>
+    <div class="header-actions">
+      <button onclick="logout()" class="logout-btn">
+        <i class="fa-solid fa-right-from-bracket"></i> Logout
+      </button>
+    </div>
+  </div>
+
+  <div id="messages">
+    <div id="chat-loader" class="hidden">
+      <i class="fas fa-spinner fa-spin"></i> Loading older messages...
+    </div>
+    </div>
+
+  <div id="typing-container" class="hidden">
+    <div class="typing-indicator">
+      <div class="typing-dots">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-container">
+    <!-- <div id="emoji-picker" class="emoji-picker hidden">
+
+     <span>😀</span><span>😃</span><span>😄</span><span>😁</span><span>😆</span><span>😅</span>
+<span>😂</span><span>🤣</span><span>😊</span><span>🙂</span><span>😉</span><span>😌</span>
+<span>😍</span><span>🥰</span><span>😘</span><span>😗</span><span>😙</span><span>😚</span>
+<span>😋</span><span>😛</span><span>😝</span><span>😜</span><span>🤪</span><span>🤨</span>
+<span>🧐</span><span>🤓</span><span>😎</span><span>🥸</span><span>🤩</span><span>🥳</span>
+<span>😏</span><span>😒</span><span>😞</span><span>😔</span><span>😟</span><span>😕</span>
+<span>🙁</span><span>☹️</span><span>😣</span><span>😖</span><span>😫</span><span>😩</span>
+<span>🥺</span><span>😢</span><span>😭</span><span>😤</span><span>😠</span><span>😡</span>
+<span>🤬</span><span>🤯</span><span>😳</span><span>🥵</span><span>🥶</span><span>😱</span>
+<span>😨</span><span>😰</span><span>😥</span><span>😓</span><span>🤗</span><span>🤔</span>
+<span>🤭</span><span>🤫</span><span>🤥</span><span>😶</span><span>😐</span><span>😑</span>
+<span>😬</span><span>🙄</span><span>😯</span><span>😦</span><span>😧</span><span>😮</span>
+<span>😲</span><span>🥱</span><span>😴</span><span>🤤</span><span>😪</span>
+<span>❤️</span><span>🧡</span><span>💛</span><span>💚</span><span>💙</span><span>💜</span>
+<span>🖤</span><span>🤍</span><span>🤎</span><span>💔</span><span>❣️</span><span>💕</span>
+<span>💞</span><span>💓</span><span>💗</span><span>💖</span><span>💘</span><span>💝</span>
+<span>👍</span><span>👎</span><span>👌</span><span>✌️</span><span>🤞</span><span>🤟</span>
+<span>🤘</span><span>👏</span><span>🙌</span><span>🙏</span><span>💪</span><span>👀</span>
+<span>👋</span><span>🤚</span><span>🖐️</span><span>✋</span><span>🖖</span><span>👈</span>
+<span>👉</span><span>👆</span><span>👇</span>
+<span>😈</span><span>👿</span><span>💀</span><span>☠️</span><span>👻</span><span>👽</span>
+<span>🤖</span><span>🎃</span>
+<span>🔥</span><span>✨</span><span>💯</span><span>⭐</span><span>🌟</span><span>⚡</span>
+<span>💥</span><span>🎉</span><span>🎊</span><span>🏆</span><span>🥇</span><span>🥈</span>
+<span>🥉</span>
+<span>🍕</span><span>🍔</span><span>🍟</span><span>🌭</span><span>🍿</span><span>🧂</span>
+<span>🥓</span><span>🥚</span><span>🍳</span><span>🥞</span><span>🧇</span><span>🍗</span>
+<span>🍖</span><span>🌮</span><span>🌯</span><span>🥗</span><span>🍝</span><span>🍜</span>
+<span>🍩</span><span>🍪</span><span>🎂</span><span>🍫</span><span>🍬</span><span>🍭</span>
+<span>☕</span><span>🍺</span><span>🥤</span>
+<span>🎮</span><span>🎧</span><span>🎵</span><span>🎶</span><span>🎤</span><span>🎬</span>
+<span>⚽</span><span>🏀</span><span>🏏</span><span>🎯</span>
+<span>🚗</span><span>🚕</span><span>🚙</span><span>🚌</span><span>🚎</span><span>🏎️</span>
+<span>🚓</span><span>🚑</span><span>🚒</span><span>🚜</span><span>🏍️</span><span>✈️</span>
+<span>🚀</span>
+<span>📱</span><span>💻</span><span>🖥️</span><span>⌨️</span><span>🖱️</span><span>🖨️</span>
+<span>🔒</span><span>🔓</span><span>🔑</span><span>🧠</span><span>💡</span><span>🛠️</span>
+<span>⚙️</span><span>⌛</span><span>⏳</span><span>📊</span><span>📈</span><span>📉</span>
+<span>📚</span>
+    </div> -->
+    <div id="emoji-picker" class="emoji-picker hidden">
+  <div class="emoji-tabs">
+    <button class="tab-btn active" data-cat="smileys"><i class="fa-regular fa-face-smile"></i></button>
+    <button class="tab-btn" data-cat="gestures"><i class="fa-regular fa-thumbs-up"></i></button>
+    <button class="tab-btn" data-cat="hearts"><i class="fa-regular fa-heart"></i></button>
+    <button class="tab-btn" data-cat="food"><i class="fa-solid fa-utensils"></i></button>
+    <button class="tab-btn" data-cat="activity"><i class="fa-solid fa-gamepad"></i></button>
+  </div>
+
+  <div class="emoji-content">
+    <div class="emoji-grid active" id="smileys">
+      <span>😀</span><span>😃</span><span>😄</span><span>😁</span><span>😆</span><span>😅</span><span>😂</span><span>🤣</span><span>😊</span><span>🙂</span><span>😉</span><span>😌</span><span>😍</span><span>🥰</span><span>😘</span><span>😗</span><span>😙</span><span>😚</span><span>😋</span><span>😛</span><span>😝</span><span>😜</span><span>🤪</span><span>🤨</span><span>🧐</span><span>🤓</span><span>😎</span><span>🥸</span><span>🤩</span><span>🥳</span><span>😏</span><span>😒</span><span>😞</span><span>😔</span><span>😟</span><span>😕</span><span>🙁</span><span>☹️</span><span>😣</span><span>😖</span><span>😫</span><span>😩</span><span>🥺</span><span>😢</span><span>😭</span><span>😤</span><span>😠</span><span>😡</span><span>🤬</span><span>🤯</span><span>😳</span><span>🥵</span><span>🥶</span><span>😱</span><span>😨</span><span>😰</span><span>😥</span><span>😓</span><span>🤗</span><span>🤔</span><span>🤭</span><span>🤫</span><span>🤥</span><span>😶</span><span>😐</span><span>😑</span><span>😬</span><span>🙄</span><span>😯</span><span>😦</span><span>😧</span><span>😮</span><span>😲</span><span>🥱</span><span>😴</span><span>🤤</span><span>😪</span>
+    </div>
+    <div class="emoji-grid" id="gestures">
+      <span>👍</span><span>👎</span><span>👌</span><span>✌️</span><span>🤞</span><span>🤟</span><span>🤘</span><span>👏</span><span>🙌</span><span>🙏</span><span>💪</span><span>👀</span><span>👋</span><span>🤚</span><span>🖐️</span><span>✋</span><span>🖖</span><span>👈</span><span>👉</span><span>👆</span><span>👇</span>
+    </div>
+    <div class="emoji-grid" id="hearts">
+      <span>❤️</span><span>🧡</span><span>💛</span><span>💚</span><span>💙</span><span>💜</span><span>🖤</span><span>🤍</span><span>🤎</span><span>💔</span><span>❣️</span><span>💕</span><span>💞</span><span>💓</span><span>💗</span><span>💖</span><span>💘</span><span>💝</span><span>🔥</span><span>✨</span><span>💯</span><span>⭐</span><span>🌟</span><span>⚡</span><span>💥</span>
+    </div>
+    <div class="emoji-grid" id="food">
+      <span>🍕</span><span>🍔</span><span>🍟</span><span>🍿</span><span>🧂</span><span>🥓</span><span>🥚</span><span>🍳</span><span>🥞</span><span>🧇</span><span>🍗</span><span>🍖</span><span>🌮</span><span>🌯</span><span>🥗</span><span>🍝</span><span>🍜</span><span>🍩</span><span>🍪</span><span>🎂</span><span>🍫</span><span>🍬</span><span>🍭</span><span>☕</span><span>🍺</span><span>🥤</span>
+    </div>
+    <div class="emoji-grid" id="activity">
+      <span>🎮</span><span>🎧</span><span>🎵</span><span>🎶</span><span>🎤</span><span>🎬</span><span>⚽</span><span>🏀</span><span>🎯</span><span>🚗</span><span>🚕</span><span>🚙</span><span>🚌</span><span>🚎</span><span>🏎️</span><span>🚓</span><span>🚑</span><span>🚒</span><span>🚜</span><span>🏍️</span><span>✈️</span><span>🚀</span><span>📱</span><span>💻</span><span>🖥️</span><span>⌨️</span><span>🖱️</span><span>🖨️</span><span>🔒</span><span>🔓</span><span>🔑</span><span>🧠</span><span>💡</span><span>🛠️</span><span>⚙️</span><span>⌛</span><span>⏳</span><span>📊</span><span>📈</span><span>📉</span><span>📚</span>
+    </div>
+  </div>
+</div>
+
+    <div class="input-wrapper">
+      <button id="emoji-btn" class="action-btn">
+        <i class="fa-regular fa-face-smile"></i>
+      </button>
+      
+      <input type="text" id="msg" placeholder="Message..." autocomplete="off">
+      
+      <button id="send-btn" class="action-btn">
+        <i class="fa-solid fa-paper-plane"></i>
+      </button>
+    </div>
+  </div>
+
+  <script type="module" src="chat.js"></script>
+
+  <!-- <script>
+
+    const emojiBtn = document.getElementById('emoji-btn');
+    const emojiPicker = document.getElementById('emoji-picker');
+    const msgInput = document.getElementById('msg');
+
+    // Toggle Emoji Picker
+    emojiBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      emojiPicker.classList.toggle('hidden');
+    });
+
+    // Add Emoji to Input
+    emojiPicker.querySelectorAll('span').forEach(emoji => {
+      emoji.addEventListener('click', () => {
+        msgInput.value += emoji.textContent;
+        msgInput.focus();
+      });
+    });
+
+    // Close picker when clicking anywhere else
+    document.addEventListener('click', () => {
+      emojiPicker.classList.add('hidden');
+    });
+  </script> -->
+<script>
+    const emojiBtn = document.getElementById('emoji-btn');
+const emojiPicker = document.getElementById('emoji-picker');
+const msgInput = document.getElementById('msg');
+const tabBtns = document.querySelectorAll('.tab-btn');
+const emojiGrids = document.querySelectorAll('.emoji-grid');
+
+// Toggle Emoji Picker
+emojiBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  emojiPicker.classList.toggle('hidden');
+});
+
+// Category Switching Logic
+tabBtns.forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const category = btn.getAttribute('data-cat');
+
+    // Reset Tabs
+    tabBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    // Show correct Grid
+    emojiGrids.forEach(grid => {
+      grid.classList.remove('active');
+      if (grid.id === category) grid.classList.add('active');
+    });
+  });
+});
+
+// Add Emoji to Input
+emojiPicker.addEventListener('click', (e) => {
+  if (e.target.tagName === 'SPAN') {
+    msgInput.value += e.target.textContent;
+    msgInput.focus();
+  }
+});
+
+// Close picker when clicking outside
+document.addEventListener('click', () => {
+  emojiPicker.classList.add('hidden');
+});
+</script>
+</body>
+</html>
