@@ -118,7 +118,7 @@ body {
 }
 
 /* ================= 5. TYPING INDICATOR ================= */
-.typing-indicator {
+/* .typing-indicator {
     display: flex;
     align-items: center;
     padding: 10px 15px;
@@ -143,8 +143,51 @@ body {
 @keyframes blink {
     0%, 80%, 100% { opacity: 0.2; transform: scale(0.8); }
     40% { opacity: 1; transform: scale(1.1); }
+} */
+/* ================= 5. TYPING INDICATOR (Clean Dots Only) ================= */
+.typing-indicator {
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+    background: transparent !important; /* Background hata diya */
+    backdrop-filter: none !important;    /* Blur bhi hata diya */
+    border-radius: 0;
+    width: fit-content;
+    margin-bottom: 10px;
+    margin-left: 5px;
 }
 
+.typing-dots { 
+    display: flex; 
+    gap: 5px; 
+}
+
+.typing-dots span {
+    width: 7px; 
+    height: 7px;
+    background: #8e8e8e; /* Dots ka color (Mountain BG par grey acha dikhega) */
+    border-radius: 50%;
+    animation: blink 1.4s infinite both;
+}
+
+/* Dots ke color ko thoda bright karne ke liye (Optional) */
+.typing-dots span {
+    background: rgba(0, 0, 0, 0.4); 
+}
+
+.typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+.typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes blink {
+    0%, 80%, 100% { 
+        opacity: 0.3; 
+        transform: scale(0.8); 
+    }
+    40% { 
+        opacity: 1; 
+        transform: scale(1.1); 
+    }
+}
 /* ================= 6. FOOTER & EMOJI PICKER ================= */
 .footer-container {
     padding: 10px;
