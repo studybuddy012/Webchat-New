@@ -189,7 +189,7 @@ audio.chat-media { width: 220px; height: 45px; margin: 5px 0; }
     background: #fafafa;
     border: 1px solid #dbdbdb;
     border-radius: 24px;
-    padding: 2px 12px;
+    padding: 2px 11px;
 }
 
 .input-wrapper input {
