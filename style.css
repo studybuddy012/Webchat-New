@@ -607,3 +607,62 @@ audio::-webkit-media-controls-panel {
     margin: 0 2px;
     animation: ig-dots 1.2s infinite ease-in-out;
 }
+/* Existing styles ke niche ye add karo */
+
+/* --- Responsive Design --- */
+@media (max-width: 600px) {
+    body {
+        padding: 0;
+        background-color: #fff; /* Mobile par clean white look */
+    }
+
+    .chat-container {
+        width: 100%;
+        height: 100vh; /* Poori mobile screen height */
+        max-width: none;
+        border-radius: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    header {
+        padding: 15px;
+        border-radius: 0;
+    }
+
+    #messages {
+        flex: 1;
+        padding: 10px;
+    }
+
+    .bubble {
+        max-width: 85%; /* Mobile par bubble thode bade dikhenge */
+        font-size: 15px;
+    }
+
+    .input-area {
+        padding: 10px;
+        gap: 8px;
+        background: #f0f0f0;
+    }
+
+    #msg {
+        padding: 12px;
+        font-size: 16px; /* Zoom prevent karne ke liye 16px best hai */
+    }
+
+    /* Icons size adjustment for touch */
+    .icon-btn {
+        width: 40px;
+        height: 40px;
+        padding: 8px;
+    }
+}
+
+/* Landscape mode ya thode bade phones ke liye */
+@media (max-height: 500px) and (orientation: landscape) {
+    .chat-container {
+        height: 100vh;
+    }
+}
