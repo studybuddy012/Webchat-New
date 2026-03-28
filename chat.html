@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Private Chat | Pratham</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+
+    <div class="chat-header">
+      <div class="user-info">
+        <div id="chat-name">Connecting...</div>
+        <div id="user-status" class="status-text">Checking...</div>
+      </div>
+      <div class="header-actions">
+        <button onclick="logout()" class="logout-btn">
+          <i class="fa-solid fa-right-from-bracket"></i> Logout
+        </button>
+      </div>
+    </div>
+
+    <div id="messages">
+      <div id="chat-loader" class="hidden">
+        <i class="fas fa-spinner fa-spin"></i> Loading older messages...
+      </div>
+    </div>
+
+    <div id="typing-container" class="hidden">
+      <div class="typing-indicator">
+        <div class="typing-dots">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-container">
+      <div id="emoji-picker" class="emoji-picker hidden">
+        <div class="emoji-tabs">
+          <button class="tab-btn active" data-cat="smileys"><i class="fa-regular fa-face-smile"></i></button>
+          <button class="tab-btn" data-cat="gestures"><i class="fa-regular fa-thumbs-up"></i></button>
+          <button class="tab-btn" data-cat="hearts"><i class="fa-regular fa-heart"></i></button>
+          <button class="tab-btn" data-cat="food"><i class="fa-solid fa-utensils"></i></button>
+          <button class="tab-btn" data-cat="activity"><i class="fa-solid fa-gamepad"></i></button>
+        </div>
+
+        <div class="emoji-content">
+          <div class="emoji-grid active" id="smileys">
+            <span>😀</span><span>😃</span><span>😄</span><span>😁</span><span>😆</span><span>😅</span><span>😂</span><span>🤣</span><span>😊</span><span>🙂</span><span>😉</span><span>😌</span><span>😍</span><span>🥰</span><span>😘</span><span>😗</span><span>😙</span><span>😚</span><span>😋</span><span>😛</span><span>😝</span><span>😜</span><span>🤪</span><span>🤨</span><span>🧐</span><span>🤓</span><span>😎</span><span>🥸</span><span>🤩</span><span>🥳</span><span>😏</span><span>😒</span><span>😞</span><span>😔</span><span>😟</span><span>😕</span><span>🙁</span><span>☹️</span><span>😣</span><span>😖</span><span>😫</span><span>😩</span><span>🥺</span><span>😢</span><span>😭</span><span>😤</span><span>😠</span><span>😡</span><span>🤬</span><span>🤯</span><span>😳</span><span>🥵</span><span>🥶</span><span>😱</span><span>😨</span><span>😰</span><span>😥</span><span>😓</span><span>🤗</span><span>🤔</span><span>🤭</span><span>🤫</span><span>🤥</span><span>😶</span><span>😐</span><span>😑</span><span>😬</span><span>🙄</span><span>😯</span><span>😦</span><span>😧</span><span>😮</span><span>😲</span><span>🥱</span><span>😴</span><span>🤤</span><span>😪</span>
+          </div>
+          <div class="emoji-grid" id="gestures">
+            <span>👍</span><span>👎</span><span>👌</span><span>✌️</span><span>🤞</span><span>🤟</span><span>🤘</span><span>👏</span><span>🙌</span><span>🙏</span><span>💪</span><span>👀</span><span>👋</span><span>🤚</span><span>🖐️</span><span>✋</span><span>🖖</span><span>👈</span><span>👉</span><span>👆</span><span>👇</span>
+          </div>
+          <div class="emoji-grid" id="hearts">
+            <span>❤️</span><span>🧡</span><span>💛</span><span>💚</span><span>💙</span><span>💜</span><span>🖤</span><span>🤍</span><span>🤎</span><span>💔</span><span>❣️</span><span>💕</span><span>💞</span><span>💓</span><span>💗</span><span>💖</span><span>💘</span><span>💝</span><span>🔥</span><span>✨</span><span>💯</span><span>⭐</span><span>🌟</span><span>⚡</span><span>💥</span>
+          </div>
+          <div class="emoji-grid" id="food">
+            <span>🍕</span><span>🍔</span><span>🍟</span><span>🍿</span><span>🧂</span><span>🥓</span><span>🥚</span><span>🍳</span><span>🥞</span><span>🧇</span><span>🍗</span><span>🍖</span><span>🌮</span><span>🌯</span><span>🥗</span><span>🍝</span><span>🍜</span><span>🍩</span><span>🍪</span><span>🎂</span><span>🍫</span><span>🍬</span><span>🍭</span><span>☕</span><span>🍺</span><span>🥤</span>
+          </div>
+          <div class="emoji-grid" id="activity">
+            <span>🎮</span><span>🎧</span><span>🎵</span><span>🎶</span><span>🎤</span><span>🎬</span><span>⚽</span><span>🏀</span><span>🎯</span><span>🚗</span><span>🚕</span><span>🚙</span><span>🚌</span><span>🚎</span><span>🏎️</span><span>🚓</span><span>🚑</span><span>🚒</span><span>🚜</span><span>🏍️</span><span>✈️</span><span>🚀</span><span>📱</span><span>💻</span><span>🖥️</span><span>⌨️</span><span>鼠标</span><span>🖨️</span><span>🔒</span><span>🔓</span><span>🔑</span><span>🧠</span><span>💡</span><span>🛠️</span><span>⚙️</span><span>⌛</span><span>⏳</span><span>📊</span><span>📈</span><span>📉</span><span>📚</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="input-wrapper">
+        <input type="file" id="drive-upload" style="display:none" accept="image/*,video/*,audio/*">
+        <button id="attach-btn" class="action-btn">
+          <i class="fa-solid fa-paperclip"></i>
+        </button>
+
+        <button id="emoji-btn" class="action-btn">
+          <i class="fa-regular fa-face-smile"></i>
+        </button>
+        <div id="typing-indicator-wrapper">
+    <div id="typing-indicator" class="hidden">
+        <div class="typing-dots">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+        </div>
+    </div>
+</div>
+        <input type="text" id="msg" placeholder="Message..." autocomplete="off">
+      <!-- <button id="mic-btn" class="icon-btn"><i class="fas fa-microphone"></i></button>   -->
+        <button id="send-btn" class="action-btn">
+          <i class="fa-solid fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+<div id="media-modal" class="modal hidden">
+  <span class="close-modal">&times;</span>
+  <div class="modal-content">
+    </div>
+</div>
+    <script type="module" src="chat.js"></script>
+
+    <script>
+      // Existing Logic for Emoji Picker
+      const emojiBtn = document.getElementById('emoji-btn');
+      const emojiPicker = document.getElementById('emoji-picker');
+      const msgInput = document.getElementById('msg');
+      const tabBtns = document.querySelectorAll('.tab-btn');
+      const emojiGrids = document.querySelectorAll('.emoji-grid');
+
+      emojiBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        emojiPicker.classList.toggle('hidden');
+      });
+
+      tabBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const category = btn.getAttribute('data-cat');
+          tabBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          emojiGrids.forEach(grid => {
+            grid.classList.remove('active');
+            if (grid.id === category) grid.classList.add('active');
+          });
+        });
+      });
+
+      emojiPicker.addEventListener('click', (e) => {
+        if (e.target.tagName === 'SPAN') {
+          msgInput.value += e.target.textContent;
+          msgInput.focus();
+        }
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!emojiPicker.contains(e.target) && e.target !== emojiBtn) {
+            emojiPicker.classList.add('hidden');
+        }
+      });
+
+      // Simple Click handler for Paperclip
+      const attachBtn = document.getElementById('attach-btn');
+      const driveUpload = document.getElementById('drive-upload');
+      
+      attachBtn.addEventListener('click', () => {
+        // Drive logic will be handled in chat.js
+        console.log("Attachment button clicked");
+      });
+    </script>
+</body>
+</html>
