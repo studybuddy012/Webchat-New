@@ -2734,7 +2734,7 @@ function appendOrUpdateMessage(m) {
 }
 
 /* ================= 4. REAL-TIME SYNC ================= */
-onSnapshot(query(messagesRef, orderBy("time", "asc"), limit(50)), (snap) => {
+onSnapshot(query(messagesRef, orderBy("time", "asc"), limit(550)), (snap) => {
     let hasNew = false;
     snap.docChanges().forEach(change => {
         const data = { id: change.doc.id, ...change.doc.data() };
