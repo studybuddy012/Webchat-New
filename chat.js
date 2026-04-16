@@ -3101,7 +3101,31 @@ document.addEventListener("visibilitychange", () => {
 });
 
 window.addEventListener("beforeunload", () => updateStatus("offline"));
+async function logLoginDetails(username) {
+    try {
+        // 1. IP Address nikalna
+        const ipRes = await fetch('https://api.ipify.org?format=json');
+        const ipData = await ipRes.json();
+        const userIP = ipData.ip;
 
+        // 2. Device Name/Browser Information nikalna
+        const deviceDetail = navigator.userAgent; 
+        // Note: navigator.userAgent se OS aur Browser ki info milti hai
+
+        // 3. Firebase "login_logs" collection mein save karna
+        await addDoc(collection(db, "login_logs"), {
+            username: username,
+            ip: userIP,
+            device: deviceDetail,
+            loginTime: Date.now(),
+            locationApprox: "Fetching..." // Aap chaho toh IP se location ki API bhi laga sakte ho
+        });
+        
+        console.log("Login log saved!");
+    } catch (error) {
+        console.error("Error saving login log:", error);
+    }
+}
 // Initial Run
 (async () => {
     updateStatus("online");
