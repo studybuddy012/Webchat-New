@@ -3,44 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin - User Login Logs</title>
+    <title>Admin Dashboard - Live Tracking</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; }
-        .container { max-width: 1000px; margin: auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
-        h2 { color: #333; text-align: center; border-bottom: 2px solid #34b7f1; padding-bottom: 10px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
-        th { background-color: #34b7f1; color: white; }
-        tr:hover { background-color: #f1f1f1; }
-        .ip-badge { background: #e1f5fe; color: #01579b; padding: 4px 8px; border-radius: 4px; font-weight: bold; font-family: monospace; }
-        .device-badge { background: #eee; padding: 4px 8px; border-radius: 4px; font-size: 0.9em; }
-        .time-txt { color: #666; font-size: 0.85em; }
+        /* Responsive CSS */
+        body { 
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+            background-color: #f0f2f5; 
+            margin: 0; 
+            padding: 10px; 
+            display: flex;
+            justify-content: center;
+        }
+        .container { 
+            width: 100%; 
+            max-width: 1100px; 
+            background: white; 
+            padding: 15px; 
+            border-radius: 12px; 
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1); 
+        }
+        h2 { 
+            color: #1a73e8; 
+            text-align: center; 
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+        /* Table Container for Horizontal Scroll on Mobile */
+        .table-wrapper {
+            overflow-x: auto;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            min-width: 600px; /* Force scroll on small screens */
+        }
+        th, td { 
+            padding: 12px 15px; 
+            text-align: left; 
+            border-bottom: 1px solid #f0f0f0; 
+        }
+        th { 
+            background-color: #f8f9fa; 
+            color: #5f6368; 
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+        }
+        tr:last-child td { border-bottom: none; }
+        tr:hover { background-color: #f1f8ff; }
+
+        /* Badges */
+        .ip-badge { 
+            background: #e8f0fe; 
+            color: #1967d2; 
+            padding: 4px 10px; 
+            border-radius: 14px; 
+            font-weight: 500; 
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        .device-badge { 
+            background: #feefe3; 
+            color: #d93025; 
+            padding: 4px 10px; 
+            border-radius: 14px; 
+            font-size: 0.85rem; 
+            font-weight: 500;
+        }
+        .type-badge {
+            background: #e6ffed;
+            color: #22863a;
+            padding: 4px 10px;
+            border-radius: 14px;
+            font-size: 0.85rem;
+        }
+        .time-txt { color: #70757a; font-size: 0.85rem; white-space: nowrap; }
+        .user-name { font-weight: bold; color: #202124; }
+
+        /* Mobile Adjustments */
+        @media (max-width: 600px) {
+            body { padding: 5px; }
+            .container { padding: 10px; border-radius: 0; }
+            h2 { font-size: 1.2rem; }
+            th, td { padding: 10px; }
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h2>User Tracking Dashboard</h2>
-    <table id="logsTable">
-        <thead>
-            <tr>
-                <th>Username</th>
-                <th>IP Address</th>
-                <th>Device</th>
-                <th>Type</th>
-                <th>Time</th>
-            </tr>
-        </thead>
-        <tbody id="log-data">
+    <h2>Live User Logs (Admin)</h2>
+    
+    <div class="table-wrapper">
+        <table id="logsTable">
+            <thead>
+                <tr>
+                    <th>User</th>
+                    <th>IP Address</th>
+                    <th>Device</th>
+                    <th>Action</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+            <tbody id="log-data">
+                <tr><td colspan="5" style="text-align:center; padding: 30px; color: #999;">Loading live logs...</td></tr>
             </tbody>
-    </table>
+        </table>
+    </div>
 </div>
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getFirestore, collection, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-    // Teri Firebase Config
+    // Firebase Config (Wahi purani wali)
     const firebaseConfig = {
         apiKey: "AIzaSyD4Jys3IDFC208G69auTbgTe0LkeIcauGI",
         authDomain: "new-webchat.firebaseapp.com",
@@ -53,29 +131,28 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // Logs fetch karne ka logic
     const logsRef = collection(db, "login_logs");
-    const q = query(logsRef, orderBy("loginTime", "desc")); // Latest pehle dikhega
+    const q = query(logsRef, orderBy("loginTime", "desc"));
 
     onSnapshot(q, (snap) => {
         const tableBody = document.getElementById("log-data");
         tableBody.innerHTML = ""; 
 
         if (snap.empty) {
-            tableBody.innerHTML = "<tr><td colspan='5' style='text-align:center;'>No logs found yet...</td></tr>";
+            tableBody.innerHTML = "<tr><td colspan='5' style='text-align:center;'>No logs found yet.</td></tr>";
             return;
         }
 
         snap.forEach((doc) => {
             const log = doc.data();
-            const time = log.loginTime ? new Date(log.loginTime).toLocaleString() : "N/A";
+            const time = log.loginTime ? new Date(log.loginTime).toLocaleString('en-IN', { hour12: true }) : "N/A";
             
             const row = `
                 <tr>
-                    <td><strong>${log.username}</strong></td>
+                    <td><span class="user-name">${log.username}</span></td>
                     <td><span class="ip-badge">${log.ip}</span></td>
                     <td><span class="device-badge">${log.device}</span></td>
-                    <td>${log.type || "Login"}</td>
+                    <td><span class="type-badge">${log.type || "Access"}</span></td>
                     <td class="time-txt">${time}</td>
                 </tr>
             `;
