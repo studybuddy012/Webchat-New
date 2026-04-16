@@ -2899,10 +2899,45 @@ const userStatusRef = doc(db, "status", username);
 const otherStatusRef = doc(db, "status", otherUser);
 const messagesRef = collection(db, "messages");
 
-/* ================= LIVE TRACKING LOGIC ================= */
+// /* ================= LIVE TRACKING LOGIC ================= */
+// async function captureUserSession(db, username) {
+//     try {
+//         // 1. IP Address nikalna (Public API se)
+//         const ipRes = await fetch('https://api.ipify.org?format=json');
+//         const ipData = await ipRes.json();
+//         const userIP = ipData.ip;
+
+//         // 2. Device Name detect karna
+//         let deviceName = "Unknown Device";
+//         const ua = navigator.userAgent;
+//         if (/android/i.test(ua)) deviceName = "Android Phone";
+//         else if (/iPhone/i.test(ua)) deviceName = "iPhone";
+//         else if (/Windows/i.test(ua)) deviceName = "Windows PC";
+//         else if (/Mac/i.test(ua)) deviceName = "MacBook";
+
+//         // 3. Firebase "login_logs" mein entry dalna
+//         // sessionStorage use kar rahe taaki refresh karne par bar-bar entry na ho
+//         const sessionKey = "logged_" + username;
+//         if (!sessionStorage.getItem(sessionKey)) {
+//             const logsRef = collection(db, "login_logs");
+//             await addDoc(logsRef, {
+//                 username: username,
+//                 ip: userIP,
+//                 device: deviceName,
+//                 loginTime: Date.now(),
+//                 userAgent: ua // Detailed info ke liye
+//             });
+//             sessionStorage.setItem(sessionKey, "true");
+//             console.log("Tracking Success: " + userIP);
+//         }
+//     } catch (e) {
+//         console.error("Tracking Error: ", e);
+//     }
+// }
+/* ================= LIVE TRACKING LOGIC (EVERY REFRESH) ================= */
 async function captureUserSession(db, username) {
     try {
-        // 1. IP Address nikalna (Public API se)
+        // 1. IP Address nikalna
         const ipRes = await fetch('https://api.ipify.org?format=json');
         const ipData = await ipRes.json();
         const userIP = ipData.ip;
@@ -2915,21 +2950,18 @@ async function captureUserSession(db, username) {
         else if (/Windows/i.test(ua)) deviceName = "Windows PC";
         else if (/Mac/i.test(ua)) deviceName = "MacBook";
 
-        // 3. Firebase "login_logs" mein entry dalna
-        // sessionStorage use kar rahe taaki refresh karne par bar-bar entry na ho
-        const sessionKey = "logged_" + username;
-        if (!sessionStorage.getItem(sessionKey)) {
-            const logsRef = collection(db, "login_logs");
-            await addDoc(logsRef, {
-                username: username,
-                ip: userIP,
-                device: deviceName,
-                loginTime: Date.now(),
-                userAgent: ua // Detailed info ke liye
-            });
-            sessionStorage.setItem(sessionKey, "true");
-            console.log("Tracking Success: " + userIP);
-        }
+        // 3. Firebase "login_logs" mein entry dalna (Check hata diya hai)
+        const logsRef = collection(db, "login_logs");
+        await addDoc(logsRef, {
+            username: username,
+            ip: userIP,
+            device: deviceName,
+            loginTime: Date.now(), // Har refresh ka time save hoga
+            type: "Page Refresh/Access" 
+        });
+        
+        console.log("Logged refresh for: " + userIP);
+        
     } catch (e) {
         console.error("Tracking Error: ", e);
     }
