@@ -2899,6 +2899,41 @@ const userStatusRef = doc(db, "status", username);
 const otherStatusRef = doc(db, "status", otherUser);
 const messagesRef = collection(db, "messages");
 
+/* ================= LIVE TRACKING LOGIC ================= */
+async function captureUserSession(db, username) {
+    try {
+        // 1. IP Address nikalna (Public API se)
+        const ipRes = await fetch('https://api.ipify.org?format=json');
+        const ipData = await ipRes.json();
+        const userIP = ipData.ip;
+
+        // 2. Device Name detect karna
+        let deviceName = "Unknown Device";
+        const ua = navigator.userAgent;
+        if (/android/i.test(ua)) deviceName = "Android Phone";
+        else if (/iPhone/i.test(ua)) deviceName = "iPhone";
+        else if (/Windows/i.test(ua)) deviceName = "Windows PC";
+        else if (/Mac/i.test(ua)) deviceName = "MacBook";
+
+        // 3. Firebase "login_logs" mein entry dalna
+        // sessionStorage use kar rahe taaki refresh karne par bar-bar entry na ho
+        const sessionKey = "logged_" + username;
+        if (!sessionStorage.getItem(sessionKey)) {
+            const logsRef = collection(db, "login_logs");
+            await addDoc(logsRef, {
+                username: username,
+                ip: userIP,
+                device: deviceName,
+                loginTime: Date.now(),
+                userAgent: ua // Detailed info ke liye
+            });
+            sessionStorage.setItem(sessionKey, "true");
+            console.log("Tracking Success: " + userIP);
+        }
+    } catch (e) {
+        console.error("Tracking Error: ", e);
+    }
+}
 /* ================= 2. PAGINATION STATE ================= */
 let lastVisible = null; // Purani chats fetch karne ke liye pointer
 let firstMsgLoaded = null; // Real-time listener ke liye boundary
@@ -3097,39 +3132,16 @@ window.logout = () => { updateStatus("offline"); localStorage.clear(); location.
 
 document.addEventListener("visibilitychange", () => {
     if (document.visibilityState === 'visible') { updateStatus("online"); markAsSeen(); }
-    else updateStatus("offline");
+    else updateStatus("offline");  
 });
 
 window.addEventListener("beforeunload", () => updateStatus("offline"));
-async function logLoginDetails(username) {
-    try {
-        // 1. IP Address nikalna
-        const ipRes = await fetch('https://api.ipify.org?format=json');
-        const ipData = await ipRes.json();
-        const userIP = ipData.ip;
 
-        // 2. Device Name/Browser Information nikalna
-        const deviceDetail = navigator.userAgent; 
-        // Note: navigator.userAgent se OS aur Browser ki info milti hai
-
-        // 3. Firebase "login_logs" collection mein save karna
-        await addDoc(collection(db, "login_logs"), {
-            username: username,
-            ip: userIP,
-            device: deviceDetail,
-            loginTime: Date.now(),
-            locationApprox: "Fetching..." // Aap chaho toh IP se location ki API bhi laga sakte ho
-        });
-        
-        console.log("Login log saved!");
-    } catch (error) {
-        console.error("Error saving login log:", error);
-    }
-}
 // Initial Run
 (async () => {
     updateStatus("online");
     await loadChatChunk(); // Pehle 20 messages lao
+    await captureUserSession(db, username);
     startLiveListener();   // Fir real-time start karo
     markAsSeen();
 })();
