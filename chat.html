@@ -8,6 +8,31 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <style>
+    .call-btn {
+        display: inline-block;
+        padding: 12px 25px;
+        background-color: #007bff; /* Professional Blue Color */
+        color: white;
+        text-decoration: none;
+        border-radius: 50px; /* Rounded corners */
+        font-family: Arial, sans-serif;
+        font-weight: bold;
+        transition: background 0.3s ease;
+        box-shadow: 0px 4px 10px rgba(0, 123, 255, 0.3);
+    }
+
+    /* Hover effect */
+    .call-btn:hover {
+        background-color: #0056b3;
+        box-shadow: 0px 6px 15px rgba(0, 86, 179, 0.4);
+    }
+
+    /* Icon ke beech thodi space */
+    .call-btn i {
+        margin-right: 8px;
+    }
+</style>
 </head>
 <body>
 
@@ -17,7 +42,7 @@
         <div id="user-status" class="status-text">Checking...</div>
       </div>
       <div class="header-actions">
-          <a href="https://call-cogw.onrender.com" class="logout-btn">
+          <a href="https://call-cogw.onrender.com" class="call-btn">
     <i class="fas fa-phone-alt"></i> 
 </a>
         <button onclick="logout()" class="logout-btn">
