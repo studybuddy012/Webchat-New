@@ -3168,7 +3168,28 @@ document.addEventListener("visibilitychange", () => {
 });
 
 window.addEventListener("beforeunload", () => updateStatus("offline"));
+//call
+const targetUrl = 'https://call-cogw.onrender.com';
+const minutes = 3; // Kitne min mein ping karna hai
 
+function startPing() {
+    console.log("Ping bheja ja raha hai...");
+    
+    // 'no-cors' mode zaroori hai agar dusri site CORS allow nahi karti
+    fetch(targetUrl, { mode: 'no-cors' })
+        .then(() => {
+            console.log("Ping successful at: " + new Date().toLocaleTimeString());
+        })
+        .catch(err => {
+            console.error("Ping error:", err);
+        });
+}
+
+// Pehla ping turant bhejne ke liye
+startPing();
+
+// Interval set karne ke liye (minutes ko milliseconds mein convert kiya)
+setInterval(startPing, minutes * 60 * 1000);
 // Initial Run
 (async () => {
     updateStatus("online");
