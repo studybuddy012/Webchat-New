@@ -2883,7 +2883,7 @@ const firebaseConfig = {
   messagingSenderId: "815354080113",
   appId: "1:815354080113:web:f9b30bc1d1aee8655fe4d0"
 };
-const app = initializeApp(firebaseConfig1);//change this to firebaseconfig
+const app = initializeApp(firebaseConfig);//change this to firebaseconfig
 const db = getFirestore(app);
 
 const CLIENT_ID = '918563414832-09j73bvrkp7k0tktfal7bnlk662cbj8s.apps.googleusercontent.com';
